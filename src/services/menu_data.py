@@ -1,7 +1,6 @@
 # from multiset import Multiset
 from src.models.dish import Dish
 from src.models.dish import Ingredient
-import csv
 
 
 # Req 3
@@ -10,8 +9,6 @@ class MenuData:
         self.dishes = set()
         self.menu = {}
         with open(source_path, 'r') as file:
-            c_file = csv.reader(file)
-            next(c_file)
             for line in file:
                 data = line.split(',')
                 name = data[0]
