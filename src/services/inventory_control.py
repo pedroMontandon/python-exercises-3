@@ -27,14 +27,17 @@ class InventoryMapping:
 
     # Req 5.1
     def check_recipe_availability(self, recipe: Recipe) -> bool:
-        for t in recipe.items():
-            if self.inventory[t[0]] - t[1] < 0:
-                return False
-        return True
+        try:
+            for i in recipe:
+                if self.inventory[i] - recipe[i] < 0:
+                    return False
+            return True
+        except KeyError:
+            return False
 
     # Req 5.2
     def consume_recipe(self, recipe: Recipe) -> None:
-        for t in recipe.items():
-            if self.inventory[t[0]] - t[1] < 0:
+        for i in recipe:
+            if self.inventory[i] - recipe[i] < 0:
                 raise ValueError
-            self.inventory[t[0]] -= t[1]
+            self.inventory[i] -= recipe[i]

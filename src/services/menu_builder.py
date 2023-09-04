@@ -28,22 +28,24 @@ class MenuBuilder:
     def get_main_menu(self, restriction=None) -> List[Dict]:
         main_menu = []
         for dish in self.menu_data.dishes:
-            if restriction is None:
+            available = self.inventory.check_recipe_availability(dish.recipe)
+            if restriction is None and available:
                 main_menu.append(
                     {
                         "dish_name": dish.name,
-                        "ingredients": dish.recipe,
+                        "ingredients": dish.get_ingredients(),
                         "price": dish.price,
                         "restrictions": dish.get_restrictions(),
                     }
                     )
-            elif restriction not in dish.get_restrictions():
+            elif restriction not in dish.get_restrictions() and available:
                 main_menu.append(
                     {
                         "dish_name": dish.name,
-                        "ingredients": dish.recipe,
+                        "ingredients": dish.get_ingredients(),
                         "price": dish.price,
                         "restrictions": dish.get_restrictions(),
                     }
                     )
+
         return main_menu
